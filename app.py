@@ -4,7 +4,7 @@ import random
 import threading
 import os
 
-from telebot import Telebot
+from telebot import TeleBot
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 
 app = Flask(__name__)
