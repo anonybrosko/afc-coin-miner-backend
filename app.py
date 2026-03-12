@@ -4,8 +4,8 @@ import random
 import threading
 import os
 
-from telebot import telebot
-from telebot.types import InLineKeyboardButton, InLineKeyboardMarkup, WebAppInfo
+from telebot import Telebot
+from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 
 app = Flask(__name__)
 CORS(app)
@@ -62,7 +62,7 @@ def run_bot():
 # Start both
 # -----------------
 if __name__ == "__main__":
-    threading.Thread(target=run_bot).start()
+    threading.Thread(target=run_bot, daemon=True).start()
 
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
