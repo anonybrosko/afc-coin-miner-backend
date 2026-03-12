@@ -20,17 +20,17 @@ clicks = 0
 def index():
     return "AFC Coin Miner backend is running!"
 
-@app.route(f"/bot/webhook", methods=["POST"])
+@app.route("/bot/webhook", methods=["POST"])
 def webhook():
-    json_data = request.get_json()
+    json_data = request.get_json(force=True)
 
     if "message" in json_data:
-        update = Update.de_json(json_data)
+        update = bot.types.Update.de_json(json_data)
         bot.process_new_updates([update])
     else:
         print("Webhook recieved non-message JSON", json_data)
 
-    return jsonify({"status": "ok"})
+    return jsonify({"ok": True})
 
 @bot.message_handler(commands=['start'])
 def start(msg):
@@ -66,5 +66,4 @@ if __name__ == "__main__":
     bot.remove_webhook()
     bot.set_webhook(url=f"{HEROKU_URL}/bot/webhook")
 
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
