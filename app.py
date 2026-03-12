@@ -34,6 +34,7 @@ def webhook():
 
 @bot.message_handler(commands=['start'])
 def start(msg):
+    print("Start command received from chat_id: ", msg.chat_id)
     keyboard = InlineKeyboardMarkup()
     keyboard.add(
         InlineKeyboardButton(
