@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import random
 import threading
+import os
 
 from telebot import telebot
 from telebot.types import InLineKeyboardButton, InLineKeyboardMarkup, WebAppInfo
