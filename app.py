@@ -7,9 +7,6 @@ import os
 from telebot import TeleBot
 from telebot.types import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 
-TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-bot = TeleBot(TOKEN)
-
 app = Flask(__name__)
 CORS(app)
 
@@ -19,31 +16,6 @@ clicks = 0
 @app.route("/")
 def index():
     return "AFC Coin Miner backend is running!"
-
-@app.route("/bot/webhook", methods=["POST"])
-def webhook():
-    json_data = request.get_json(force=True)
-
-    if "message" in json_data:
-        update = Update.de_json(json_data)
-        bot.process_new_updates([update])
-    else:
-        print("Webhook recieved non-message JSON", json_data)
-
-    return jsonify({"ok": True})
-
-@bot.message_handler(commands=['start'])
-def start(msg):
-    print("Start command received from chat_id: ", msg.chat.id)
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(
-        InlineKeyboardButton(
-            text="Go to Mine 🪙",
-            web_app=WebAppInfo(url="https://anonybrosko.github.io/afc-coin-miner-frontend")
-        )
-    )
-
-    bot.send_message(msg.chat.id, "Welcome! Click below to mine!", reply_markup=keyboard)
 
 @app.route("/mine")
 def mine():
@@ -63,8 +35,4 @@ def mine():
 # Start both
 # -----------------
 if __name__ == "__main__":
-    HEROKU_URL = os.environ.get("BACKEND_URL")
-    bot.remove_webhook()
-    bot.set_webhook(url=f"{HEROKU_URL}/bot/webhook")
-
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
