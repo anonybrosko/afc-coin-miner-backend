@@ -41,7 +41,7 @@ def start(msg):
     keyboard.add(
         InlineKeyboardButton(
             text="Go to Mine 🪙",
-            web_app=WebAppInfo(url="https://afc-coin-miner.netlify.app/")
+            web_app=WebAppInfo(url="https://anonybrosko.github.io/afc-coin-miner-frontend")
         )
     )
 
