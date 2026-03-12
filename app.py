@@ -25,7 +25,7 @@ def webhook():
     json_data = request.get_json(force=True)
 
     if "message" in json_data:
-        update = bot.types.Update.de_json(json_data)
+        update = Update.de_json(json_data)
         bot.process_new_updates([update])
     else:
         print("Webhook recieved non-message JSON", json_data)
